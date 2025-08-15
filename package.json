@@ -1,15 +1,27 @@
 {
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "mongoose": "^8.17.1",
+    "nodemon": "^3.1.10",
+    "path": "^0.12.7"
+  },
   "name": "sms_system",
   "version": "1.0.0",
-  "description": "school management system",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Mohit Sharma",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mohit639592/CollegeManagementSystem.git"
+  },
+  "keywords": [],
+  "author": "",
   "license": "ISC",
-  "dependencies": {
-    "express": "^5.1.0",
-    "nodemon": "^3.1.10"
-  }
+  "bugs": {
+    "url": "https://github.com/mohit639592/CollegeManagementSystem/issues"
+  },
+  "homepage": "https://github.com/mohit639592/CollegeManagementSystem#readme",
+  "description": ""
 }
