@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add New Student</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        .form-container {
+            max-width: 700px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        }
+
+        .form-container h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #1e3a8a;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            margin-bottom: 6px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .form-group input, .form-group select {
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background: #1e3a8a;
+            color: #fff;
+            font-size: 18px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background: #3b82f6;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Add New Student</h1>
+        <form action="/head/add-student" method="POST">
+            
+            <div class="form-group">
+                <label for="srNo">Sr. No</label>
+                <input type="text" name="srNo" id="srNo" required>
+            </div>
+
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" name="name" id="name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" required>
+            </div>
+
+            <div class="form-group">
+                <label for="classNo">Class</label>
+                <input type="text" name="classNo" id="classNo" required>
+            </div>
+
+            <div class="form-group">
+                <label for="rollNo">Roll No</label>
+                <input type="text" name="rollNo" id="rollNo" required>
+            </div>
+
+            <div class="form-group">
+                <label for="fatherName">Father's Name</label>
+                <input type="text" name="fatherName" id="fatherName" required>
+            </div>
+
+            <div class="form-group">
+                <label for="motherName">Mother's Name</label>
+                <input type="text" name="motherName" id="motherName" required>
+            </div>
+
+            <div class="form-group">
+                <label for="address">Address</label>
+                <input type="text" name="address" id="address" required>
+            </div>
+
+            <div class="form-group">
+                <label for="dateOfBirth">Date of Birth</label>
+                <input type="date" name="dateofBirth" id="dateOfBirth" required>
+            </div>
+
+            <div class="form-group">
+                <label for="adharcardNo">Adhar Card Number</label>
+                <input type="text" name="adharcardNo" id="adharCardNo" required>
+            </div>
+
+            <div class="form-group">
+                <label for="contactNo">Contact Number</label>
+                <input type="text" name="contactNo" id="contactNumber">
+            </div>
+
+            <div class="form-group">
+                <label for="emergencyNo">Emergency Contact Number</label>
+                <input type="text" name="emergencyNo" id="emergencyContact">
+            </div>
+
+            <div class="form-group">
+                <label for="admissionDate">Admission Date</label>
+                <input type="date" name="admissionDate" id="admissionDate">
+            </div>
+
+            <div class="form-group">
+                <label for="academicYear">Academic Year</label>
+                <input type="text" name="academicYear" id="academicYear" placeholder="e.g. 2025-26">
+            </div>
+
+            <div class="form-group">
+                <label for="gender">Gender</label>
+                <select name="gender" id="gender">
+                    <option value="">Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn">Add Student</button>
+        </form>
+    </div>
+</body>
+</html>
