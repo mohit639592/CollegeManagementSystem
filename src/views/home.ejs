@@ -32,11 +32,11 @@
           <div>
             <h1 class="text-2xl font-semibold">Welcome back, 👋</h1>
             <p class="text-gray-500">Have a great learning day!</p>
-            <p class="text-gray-600 font-medium">mohitsharma639592@gmail.com</p>
+            <p class="text-gray-600 font-medium"><%= student1.name %></p>
           </div>
           <div class="text-right">
             <p class="text-sm text-gray-600">Class</p>
-            <p class="font-bold text-lg">10th</p>
+            <p class="font-bold text-lg"><%= student1.classNo  %></p>
             <p class="text-sm text-red-500">Fees: Pending</p>
           </div>
         </div>
@@ -46,7 +46,8 @@
       <div class="grid md:grid-cols-3 gap-6 mb-6">
         <div class="bg-white p-5 rounded-lg shadow">
           <h2 class="font-semibold mb-2">Parents</h2>
-          <p class="text-gray-600 text-sm">Access for parents enabled.</p>
+          <p class="text-gray-600 text-sm">Father Name:  <%= student1.fatherName %>
+          Mother Name: <%= student1.motherName %></p>
         </div>
         <div class="bg-white p-5 rounded-lg shadow">
           <h2 class="font-semibold mb-2">Overall Attendance</h2>

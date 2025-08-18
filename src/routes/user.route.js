@@ -71,7 +71,7 @@ router.get("/head",async(req,res)=>{
 })
 
 router.get("/head/students",async (req,res)=>{
-    const allstudent = await usermodel.find();
+    const allstudent = await studentModel.find();
     res.render("head-/student-data",{students:allstudent})
 })
 
@@ -113,7 +113,12 @@ router.post("/head/add-student",async(req,res)=>{
       academicYear,
       gender
     })
-    console.log(req.body)
+    await usermodel.create({
+      name,
+      email,
+      password,
+      
+  })
     res.send("STUDENT ADDED SUCCESSFULLY")
   })
 
