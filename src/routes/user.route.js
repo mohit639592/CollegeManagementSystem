@@ -57,7 +57,7 @@ router.post("/login",async (req,res)=>{
       res.redirect("/head")
     }
     if(!student1){
-      return res.send("SORRY WE CAN NOT FIND YOUR DATA PLEASE CONTACT TO SCHOOL")
+      return res.send("SORRY WE CAN NOT FIND YOUR DATA PLEASE CONTACT TO YOUR HEAD")
     }
     res.render("home",{user,student1})
 })
@@ -122,9 +122,33 @@ router.post("/head/add-student",async(req,res)=>{
     res.send("STUDENT ADDED SUCCESSFULLY")
   })
 
+
+  router.get("/students/search",async (req,res)=>{
+   const {classNo,srNo,contactNo,rollNo} = req.query
+   const query={}
+   if(classNo) {
+      query.classNo=classNo
+   }
+   if(srNo){
+    query.srNo=srNo
+   }
+   if(contactNo){
+    query.contactNo=contactNo
+   }
+   if(rollNo){
+    query.rollNo=rollNo
+   }
+
+   try {
+    const stud = await studentModel.find(query);
+    res.render('allStudents', { stud });
+} catch(err) {
+    res.status(500).send("Student Not Found");
+}
+});
+
 // router.get("/home",(req,res)=>{
 //     res.render("home",{user: req.user})
+
 // })
-
-
 module.exports = router

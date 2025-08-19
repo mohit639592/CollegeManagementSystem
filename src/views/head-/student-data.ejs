@@ -1,48 +1,64 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>All Students</title>
-    <link rel="stylesheet" href="/css/head.css">
-</head>
-<body>
-    <style>
-        table {
-    width: 80%;
-    margin: 20px auto;
-    border-collapse: collapse;
-    background: #fff;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-}
+<h1 style="text-align:center;">All Students</h1>
 
-th, td {
-    padding: 12px 20px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
+<!-- Class filter -->
+<div style="text-align:center; margin-bottom:10px;">
+    <label>Filter by Class: </label>
+    <select id="classFilter" onchange="filterTable()">
+        <option value="">All</option>
+        <option value="6th">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9th">9</option>
+        <option value="10th">10</option>
+        <option value=11th">11</option>
+        <option value="12th">12</option>
+        <!-- aur classes yaha add kar do -->
+    </select>
 
-th {
-    background: #1e3a8a;
-    color: #fff;
-}
+    <!-- Find Student by name -->
+    <input id="findInput" onkeyup="filterTable()" placeholder="Find student by name">
+</div>
 
-    </style>
-    <h1>All Students</h1>
-    <table>
-        <thead>
+<table border="1" width="80%" style="margin:auto;">
+    <thead>
+        <tr>
+            <th>S.No</th>
+            <th>Name</th>
+            <th>Class</th>
+        </tr>
+    </thead>
+    <tbody id="studentTable">
+        <% students.forEach((student, index) => { %>
             <tr>
-                <th>Name</th>
-                <th>Class</th>
+                <td><%= index + 1 %></td>
+                <td><%= student.name %></td>
+                <td><%= student.classNo || "N/A" %></td>
             </tr>
-        </thead>
-        <tbody>
-            <% students.forEach(student => { %>
-                <tr>
-                    <td><%= student.name %></td>
-                    <td><%= student.classNo || "N/A" %></td>
-                </tr>
-            <% }) %>
-        </tbody>
-    </table>
-</body>
-</html>
+        <% }) %>
+    </tbody>
+</table>
+
+<script>
+function filterTable() {
+    const classVal = document.getElementById('classFilter').value.toLowerCase();
+    const searchVal = document.getElementById('findInput').value.toLowerCase();
+
+
+    let rows = document.querySelectorAll('#studentTable tr');
+    let serial = 1;
+
+for (let i = 0; i < rows.length; i++) {
+    let name = rows[i].cells[1].innerText.toLowerCase();
+    let cls = rows[i].cells[2].innerText.toLowerCase();
+
+    // Simple check
+    if ((classVal == "" || cls == classVal) && (searchVal == "" || name.indexOf(searchVal) != -1)) {
+        rows[i].style.display = "";      // show row
+        rows[i].cells[0].innerText = serial++; // update serial
+    } else {
+        rows[i].style.display = "none";  // hide row
+    }
+}
+
+}
+</script>
