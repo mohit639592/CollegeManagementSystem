@@ -1,25 +1,74 @@
-<h1 style="text-align:center;">All Students</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>All Students</title>
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4f4f9;
+        margin: 0;
+        padding: 20px;
+    }
 
-<!-- Class filter -->
-<div style="text-align:center; margin-bottom:10px;">
-    <label>Filter by Class: </label>
-    <select id="classFilter" onchange="filterTable()">
-        <option value="">All</option>
-        <option value="6th">6</option>
-        <option value="7">7</option>
-        <option value="8">8</option>
-        <option value="9th">9</option>
-        <option value="10th">10</option>
-        <option value=11th">11</option>
-        <option value="12th">12</option>
-        <!-- aur classes yaha add kar do -->
-    </select>
+    h1 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 30px;
+    }
 
-    <!-- Find Student by name -->
-    <input id="findInput" onkeyup="filterTable()" placeholder="Find student by name">
-</div>
+    table {
+        width: 80%;
+        margin: auto;
+        border-collapse: collapse;
+        background-color: #fff;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        border-radius: 8px;
+        overflow: hidden;
+    }
 
-<table border="1" width="80%" style="margin:auto;">
+    th, td {
+        padding: 12px 15px;
+        text-align: center;
+    }
+
+    th {
+        background-color: #4CAF50;
+        color: white;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    tr:hover {
+        background-color: #f1f1f1;
+        transition: 0.3s;
+    }
+</style>
+</head>
+<body>
+
+    <h1>Find Student</h1>
+    <form action="/find-student" method="get" class="search-form">
+        <select name="type">
+          <option value="name">Name</option>
+          <option value="nameClass">Name + Class No</option>
+          <option value="srNo">Sr. No</option>
+          <option value="rollNo">Roll No</option>
+          <option value="rollClass">Roll No + Class No</option>
+        </select>
+      
+        <input type="text" name="value" placeholder="Enter value">
+        <button type="submit">Find</button>
+    </form>
+
+<h1>All Students</h1>
+
+<table>
     <thead>
         <tr>
             <th>S.No</th>
@@ -27,38 +76,70 @@
             <th>Class</th>
         </tr>
     </thead>
-    <tbody id="studentTable">
-        <% students.forEach((student, index) => { %>
-            <tr>
-                <td><%= index + 1 %></td>
-                <td><%= student.name %></td>
-                <td><%= student.classNo || "N/A" %></td>
-            </tr>
+    <tbody>
+        <% students.forEach((student) => { %>
+        <tr>
+            <td><%= student.srNo %></td>
+            <td><%= student.name %></td>
+            <td><%= student.classNo || "N/A" %></td>
+        </tr>
         <% }) %>
     </tbody>
 </table>
 
-<script>
-function filterTable() {
-    const classVal = document.getElementById('classFilter').value.toLowerCase();
-    const searchVal = document.getElementById('findInput').value.toLowerCase();
-
-
-    let rows = document.querySelectorAll('#studentTable tr');
-    let serial = 1;
-
-for (let i = 0; i < rows.length; i++) {
-    let name = rows[i].cells[1].innerText.toLowerCase();
-    let cls = rows[i].cells[2].innerText.toLowerCase();
-
-    // Simple check
-    if ((classVal == "" || cls == classVal) && (searchVal == "" || name.indexOf(searchVal) != -1)) {
-        rows[i].style.display = "";      // show row
-        rows[i].cells[0].innerText = serial++; // update serial
-    } else {
-        rows[i].style.display = "none";  // hide row
-    }
+<style>
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f4f9;
 }
 
+.search-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin: 30px 0;
+    flex-wrap: wrap;
 }
-</script>
+
+.search-form select,
+.search-form input {
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.search-form select:focus,
+.search-form input:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+}
+
+.search-form button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.search-form button:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+}
+
+.search-form input::placeholder {
+    color: #aaa;
+}
+</style>
+
+  
+
+</body>
+</html>

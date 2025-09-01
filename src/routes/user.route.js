@@ -4,35 +4,12 @@ const router = express.Router();
 const path = require("path");
 const { route } = require("../app");
 const studentModel = require("../models/student.model");
+const teacherModel = require("../models/teacher.model")
 router.get("/",(req,res)=>{
     // res.send("HOME HAI YR BAR BAR KYU PARESHAN KR RHA HAI")
     res.render("index",{title:"register karna hai"})
     
   
-})
-
-// router.get("/register",(req,res)=>{
-//     res.render("register",{title:"register karna hai"})
-// })
-
-router.post("/register",async (req,res)=>{
-    const{name,email,password,Role} = req.body
-    let dupli = await usermodel.findOne({email:email})
-    if(dupli && dupli.length!=0){
-        return res.json({messegse:"User Already Exsists"})
-    }
-    await usermodel.create({
-        name,
-        email,
-        password,
-        Role
-    })
-    res.redirect("registered")
-
-})
-
-router.get("/registered",(req,res)=>{
-    res.render("registered")
 })
 
 router.get("/login",(req,res)=>{
@@ -66,10 +43,12 @@ router.post("/login",async (req,res)=>{
 //HEAD PART
 router.get("/head",async(req,res)=>{
 
-  const allStudents = await studentModel.find(); // sab students
+  const allStudents = await studentModel.find(); // sab students ka data pass 
   res.render("head-/head",{student:allStudents})
 })
 
+
+//HEAD STUDENT PART
 router.get("/head/students",async (req,res)=>{
     const allstudent = await studentModel.find();
     res.render("head-/student-data",{students:allstudent})
@@ -123,30 +102,18 @@ router.post("/head/add-student",async(req,res)=>{
   })
 
 
-  router.get("/students/search",async (req,res)=>{
-   const {classNo,srNo,contactNo,rollNo} = req.query
-   const query={}
-   if(classNo) {
-      query.classNo=classNo
-   }
-   if(srNo){
-    query.srNo=srNo
-   }
-   if(contactNo){
-    query.contactNo=contactNo
-   }
-   if(rollNo){
-    query.rollNo=rollNo
-   }
 
-   try {
-    const stud = await studentModel.find(query);
-    res.render('allStudents', { stud });
-} catch(err) {
-    res.status(500).send("Student Not Found");
-}
-});
 
+
+
+
+
+
+
+//HEAD TEACHER PART
+router.get("/head/add-teacher",(req,res)=>{
+    res.render("head-/add-teacher")
+})
 // router.get("/home",(req,res)=>{
 //     res.render("home",{user: req.user})
 
