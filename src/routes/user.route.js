@@ -5,12 +5,38 @@ const path = require("path");
 // const { route } = require("../app");
 const studentModel = require("../models/student.model");
 const teacherModel = require("../models/teacher.model")
+const Subject = require("../models/subject.model")
 router.get("/",(req,res)=>{
     // res.send("HOME HAI YR BAR BAR KYU PARESHAN KR RHA HAI")
     res.render("index",{title:"register karna hai"})
     
   
 })
+router.post("/signup", async (req, res) => {
+  try {
+    const { name, email, password, role } = req.body;
+
+    // Check if user already exists
+    const existingUser = await usermodel.findOne({ email });
+    if (existingUser) {
+      return res.status(400).send("Email already registered");
+    }
+
+    // Create new user
+    await usermodel.create({
+      name,
+      email,
+      password,
+      role
+    });
+
+    res.status(201).send("Signup successful!");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error during signup");
+  }
+});
+
 
 router.get("/login",(req,res)=>{
     res.render("login",{title:"login hai"})
@@ -30,14 +56,50 @@ router.post("/login",async (req,res)=>{
     if(user.password != password){
         return res.send("WRONG PASSWORD")
     }
-    if(user.Role==="HEAD"){
+    if(user.role==="HEAD"){
       res.redirect("/head")
     }
     if(!student1){
       return res.send("SORRY WE CAN NOT FIND YOUR DATA PLEASE CONTACT TO YOUR HEAD")
     }
-    res.render("home",{user,student1})
+    const subjects = await Subject.find({ class: student1.classNo });
+    res.render("home",{user,student1,subjects})
 })
+
+
+router.get("/head/add-subject",(req,res)=>{
+  res.render("head-/add-subject");
+})
+
+
+
+router.post("/add-subject", async (req, res) => {
+  try {
+      const { class: className, subjects } = req.body;
+
+      if (!className || !subjects || subjects.length === 0) {
+          return res.status(400).send("Class and subjects are required");
+      }
+
+      // Each subject now has name and teacherId
+      const subjectsToSave = subjects.map(sub => ({
+          name: sub.name,
+          class: className,
+          teacherId: sub.teacherId
+      }));
+
+      // Insert all subjects at once
+      await Subject.insertMany(subjectsToSave);
+
+      res.send("Subjects added successfully!");
+  } catch (err) {
+      console.error(err);
+      res.status(500).send("Server Error");
+  }
+});
+
+
+
 
 
 //HEAD PART

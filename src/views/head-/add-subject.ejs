@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Subjects</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            padding: 50px;
+        }
+
+        .container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            width: 450px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            padding: 10px 15px;
+            border: none;
+            background: #007bff;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+            margin-right: 10px;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        .subject-field {
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .subject-field label {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Add Subjects</h1>
+
+        <form id="subjectForm">
+            <label>Class:</label>
+            <input type="text" id="class" placeholder="Enter class e.g. 10th" required>
+
+            <div id="subjectsContainer">
+                <div class="subject-field">
+                    <label>Subject Name:</label>
+                    <input type="text" name="subject" placeholder="Enter subject name" required>
+
+                    <label>Teacher ID:</label>
+                    <input type="text" name="teacherId" placeholder="Enter teacher ID" required>
+                </div>
+            </div>
+
+            <button type="button" id="addSubjectBtn">+ Add Another Subject</button>
+            <button type="submit">Save Subjects</button>
+        </form>
+    </div>
+
+    <script>
+        // Dynamically add more subject fields with teacher ID
+        document.getElementById('addSubjectBtn').onclick = function() {
+            var div = document.createElement('div');
+            div.className = 'subject-field';
+            div.innerHTML = `
+                <label>Subject Name:</label>
+                <input type="text" name="subject" placeholder="Enter subject name" required>
+
+                <label>Teacher ID:</label>
+                <input type="text" name="teacherId" placeholder="Enter teacher ID" required>
+            `;
+            document.getElementById('subjectsContainer').appendChild(div);
+        };
+
+        // Submit all subjects with their teacher IDs
+        document.getElementById('subjectForm').onsubmit = async function(e) {
+            e.preventDefault();
+
+            var classValue = document.getElementById('class').value;
+
+            var subjectFields = document.querySelectorAll('.subject-field');
+            var subjects = Array.from(subjectFields).map(field => ({
+                name: field.querySelector('input[name="subject"]').value,
+                teacherId: field.querySelector('input[name="teacherId"]').value
+            }));
+
+            var res = await fetch('/add-subject', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ class: classValue, subjects })
+            });
+
+            alert(await res.text());
+
+            // Reset form
+            this.reset();
+            document.getElementById('subjectsContainer').innerHTML = `
+                <div class="subject-field">
+                    <label>Subject Name:</label>
+                    <input type="text" name="subject" placeholder="Enter subject name" required>
+
+                    <label>Teacher ID:</label>
+                    <input type="text" name="teacherId" placeholder="Enter teacher ID" required>
+                </div>
+            `;
+        };
+    </script>
+</body>
+</html>
