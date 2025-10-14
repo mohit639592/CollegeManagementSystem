@@ -43,28 +43,54 @@ router.get("/login",(req,res)=>{
 })
 
 
-router.post("/login",async (req,res)=>{
-    const {email,password} = req.body
+router.post("/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
 
-    const user =await usermodel.findOne({email:email})
-    const student1 =await studentModel.findOne({email:email})
+    // Find users in all collections
+    const user = await usermodel.findOne({ email });
+    const student = await studentModel.findOne({ email });
+    const teacher = await teacherModel.findOne({ email });
 
-    if(!user){
-        return res.send("USER NOT FOUND PLEASE REGISTER FIRST")
+    // 1️⃣ If teacher exists
+    if (teacher) {
+      if (teacher.password !== password) {
+        return res.send("WRONG PASSWORD");
+      }
+      return res.redirect(`/teacher?email=${teacher.email}`);
+
     }
 
-    if(user.password != password){
-        return res.send("WRONG PASSWORD")
+    // 2️⃣ If no user found
+    if (!user) {
+      return res.send("USER NOT FOUND — PLEASE REGISTER FIRST");
     }
-    if(user.role==="HEAD"){
-      res.redirect("/head")
+
+    // 3️⃣ Verify password
+    if (user.password !== password) {
+      return res.send("WRONG PASSWORD");
     }
-    if(!student1){
-      return res.send("SORRY WE CAN NOT FIND YOUR DATA PLEASE CONTACT TO YOUR HEAD")
+
+    // 4️⃣ If head user
+    if (user.role === "HEAD") {
+      return res.redirect("/head");
     }
-    const subjects = await Subject.find({ class: student1.classNo });
-    res.render("home",{user,student1,subjects})
-})
+
+    // 5️⃣ If student data missing
+    if (!student) {
+      return res.send("SORRY, WE CANNOT FIND YOUR DATA. PLEASE CONTACT YOUR HEAD.");
+    }
+
+    // 6️⃣ Fetch subjects and render home page
+    const subjects = await Subject.find({ class: student.classNo });
+    return res.render("home", { user, student, subjects });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server Error");
+  }
+});
+
 
 
 router.get("/head/add-subject",(req,res)=>{
@@ -105,8 +131,9 @@ router.post("/add-subject", async (req, res) => {
 //HEAD PART
 router.get("/head",async(req,res)=>{
 
-  const allStudents = await studentModel.find(); // sab students ka data pass 
-  res.render("head-/head",{student:allStudents})
+  const allStudents = await studentModel.find(); 
+  const teacher = await teacherModel.find();
+  res.render("head-/head",{student:allStudents , teacher})
 })
 
 
@@ -173,8 +200,41 @@ router.post("/head/add-student",async(req,res)=>{
 
 
 //HEAD TEACHER PART
-router.get("/head/add-teacher",(req,res)=>{
-    res.render("head-/add-teacher")
+router.get("/head/add-teacher",async(req,res)=>{
+  const teachers = await teacherModel.find(); // get all teachers
+  res.render("head-/add-teacher", { teachers });
+})
+
+router.get("/teacher", async (req, res) => {
+  // Get teacher email (from session or query)
+  const email = req.query.email; // or req.session.teacherEmail
+  if (!email) return res.redirect("/login");
+
+  const teacher = await teacherModel.findOne({ email });
+  const student = await studentModel.find();
+  if (!teacher) return res.send("Teacher not found!");
+
+  // Wrap in array for EJS table
+  res.render("teacher",{teacher,student});
+});
+
+
+router.post("/head/add-teacher",async (req,res)=>{
+  const { name, email, password, id, class: className, salary, contactNo, address,subject } = req.body;
+  const newTeacher = new teacherModel({
+    name,
+    email,
+    password,
+    id,
+    class: className,
+    salary,
+    contactNo,
+    address,
+    subject
+  });
+
+  await newTeacher.save();
+  res.redirect("/head/add-teacher");
 })
 // router.get("/home",(req,res)=>{
 //     res.render("home",{user: req.user})

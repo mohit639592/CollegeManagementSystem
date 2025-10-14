@@ -33,6 +33,10 @@ const teacherSchema = mongoose.Schema({
     address:{
         type:String,
         required:true
+    },
+    subject:{
+        type:String,
+        required:true
     }
 })
 
