@@ -83,7 +83,7 @@ router.post("/login", async (req, res) => {
 
     // 6️⃣ Fetch subjects and render home page
     const subjects = await Subject.find({ class: student.classNo });
-    return res.render("home", { user, student, subjects });
+    return res.render("home", { user, student1:student, subjects });
 
   } catch (err) {
     console.error(err);
