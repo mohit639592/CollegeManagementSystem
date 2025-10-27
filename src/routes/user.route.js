@@ -194,7 +194,12 @@ router.post("/head/add-student",async(req,res)=>{
 
 
 
-
+  router.get("/sitemap.xml", (req, res) => {
+    res.sendFile(path.join(__dirname, "../../sitemap.xml"));
+  });
+  
+  
+  
 
 
 
