@@ -147,6 +147,100 @@ router.get("/head/add-student",(req,res)=>{
   res.render("head-/add-student")
 })
 
+
+
+//update std
+router.get("/update-student", (req, res) => {
+  res.render("updateStudent", { student: null, message: null });
+});
+
+// 🟡 Find student by email (form submission)
+router.post("/find-student", async (req, res) => {
+  try {
+    const { email } = req.body;
+    const student = await studentModel.findOne({ email });
+
+    if (!student) {
+      return res.render("updateStudent", { student: null, message: "Student not found" });
+    }
+
+    res.render("updateStudent", { student, message: "Student found!" });
+  } catch (error) {
+    console.error(error);
+    res.render("updateStudent", { student: null, message: "Error finding student" });
+  }
+});
+
+// 🟣 Update student data
+router.post("/update-student", async (req, res) => {
+  try {
+    const { email, ...updateData } = req.body;
+
+    const updatedStudent = await studentModel.findOneAndUpdate(
+      { email },
+      { $set: updateData },
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedStudent) {
+      return res.render("updateStudent", { student: null, message: "Student not found" });
+    }
+
+    res.render("updateStudent", { student: updatedStudent, message: "Student updated successfully!" });
+  } catch (error) {
+    console.error("Error updating student:", error);
+    res.render("updateStudent", { student: null, message: "Error updating student" });
+  }
+});
+
+
+//update teacher
+router.get("/update-teacher", (req, res) => {
+  res.render("updateTeacher", { teacher: null, message: null });
+});
+
+// 🟡 Find teacher by email
+router.post("/find-teacher", async (req, res) => {
+  try {
+    const { email } = req.body;
+    const teacher = await teacherModel.findOne({ email });
+
+    if (!teacher) {
+      return res.render("updateTeacher", { teacher: null, message: "Teacher not found" });
+    }
+
+    res.render("updateTeacher", { teacher, message: "Teacher found!" });
+  } catch (error) {
+    console.error("Error finding teacher:", error);
+    res.render("updateTeacher", { teacher: null, message: "Error finding teacher" });
+  }
+});
+
+// 🟣 Update teacher data
+router.post("/update-teacher", async (req, res) => {
+  try {
+    const { email, ...updateData } = req.body;
+
+    const updatedTeacher = await teacherModel.findOneAndUpdate(
+      { email },
+      { $set: updateData },
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedTeacher) {
+      return res.render("updateTeacher", { teacher: null, message: "Teacher not found" });
+    }
+
+    res.render("updateTeacher", { teacher: updatedTeacher, message: "Teacher updated successfully!" });
+  } catch (error) {
+    console.error("Error updating teacher:", error);
+    res.render("updateTeacher", { teacher: null, message: "Error updating teacher" });
+  }
+});
+
+
+
+
 router.post("/head/add-student",async(req,res)=>{
   const {srNo,name,email,password,classNo,rollNo,fatherName,motherName,address,dateofBirth,adharcardNo,contactNo,emergencyNo,admissionDate,academicYear,gender} = req.body
     console.log(req.body);
