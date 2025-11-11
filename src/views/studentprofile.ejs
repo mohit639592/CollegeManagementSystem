@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= student.name %> | Profile</title>
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      background: #f5f7fa;
+      margin: 0;
+      padding: 0;
+    }
+
+    .profile-container {
+      max-width: 800px;
+      background: white;
+      margin: 40px auto;
+      padding: 30px 40px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 30px;
+    }
+
+    .profile-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px 25px;
+    }
+
+    .profile-item {
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .label {
+      font-weight: 600;
+      color: #444;
+    }
+
+    .value {
+      color: #666;
+    }
+
+    .back-btn {
+      display: block;
+      text-align: center;
+      margin-top: 30px;
+      padding: 10px 20px;
+      background: #007bff;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: 0.3s;
+    }
+
+    .back-btn:hover {
+      background: #0056b3;
+    }
+
+    @media(max-width:600px){
+      .profile-section {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="profile-container">
+    <h1>Student Profile</h1>
+
+    <div class="profile-section">
+      <div class="profile-item">
+        <span class="label">Name:</span>
+        <span class="value"><%= student.name %></span>
+      </div>
+      <div class="profile-item">
+        <span class="label">Email:</span>
+        <span class="value"><%= student.email %></span>
+      </div>
+      <div class="profile-item">
+        <span class="label">Class:</span>
+        <span class="value"><%= student.classNo %></span>
+      </div>
+      <div class="profile-item">
+        <span class="label">Roll No:</span>
+        <span class="value"><%= student.rollNo %></span>
+      </div>
+      <div class="profile-item">
+        <span class="label">Father's Name:</span>
+        <span class="value"><%= student.fatherName %></span>
+      </div>
+      <div class="profile-item">
+        <span class="label">Mother's Name:</span>
+        <span class="value"><%= student.motherName %></span>
+      </div>
+      <div class="profile-item">
+        <span class="label">Address:</span>
+        <span class="value"><%= student.address %></span>
+      </div>
+      <div class="profile-item">
+        <span class="label">Date of Birth:</span>
+        <span class="value"><%= student.dateofBirth %></span>
+      </div>
+      <div class="profile-item">
+        <span class="label">Aadhar No:</span>
+        <span class="value"><%= student.adharcardNo %></span>
+      </div>
+      <div class="profile-item">
+        <span class="label">Contact No:</span>
+        <span class="value"><%= student.contactNo %></span>
+      </div>
+      <div class="profile-item">
+        <span class="label">Emergency No:</span>
+        <span class="value"><%= student.emergencyNo %></span>
+      </div>
+      <div class="profile-item">
+        <span class="label">Admission Date:</span>
+        <span class="value"><%= student.admissionDate %></span>
+      </div>
+      <div class="profile-item">
+        <span class="label">Academic Year:</span>
+        <span class="value"><%= student.academicYear || "N/A" %></span>
+      </div>
+      <div class="profile-item">
+        <span class="label">Gender:</span>
+        <span class="value"><%= student.gender %></span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -15,9 +15,9 @@
       <h2 class="text-2xl font-bold mb-8">Ishwar Kripa <br> Vidya Mandir</h2>
       <nav class="space-y-4">
         <a href="#" class="block hover:text-yellow-300"><i class="fa fa-home mr-2"></i>Dashboard</a>
-        <a href="#" class="block hover:text-yellow-300"><i class="fa fa-user mr-2"></i>My Profile</a>
+        <a href="/profile?email=<%= email %>" class="block hover:text-yellow-300"><i class="fa fa-user mr-2"></i>My Profile</a>
         <a href="#" class="block hover:text-yellow-300"><i class="fa fa-book mr-2"></i>Subjects</a>
-        <a href="#" class="block hover:text-yellow-300"><i class="fa fa-clipboard-check mr-2"></i>Attendance</a>
+        <!-- <a href="#" class="block hover:text-yellow-300"><i class="fa fa-clipboard-check mr-2"></i>Attendance</a> -->
         <a href="#" class="block hover:text-yellow-300"><i class="fa fa-calendar-alt mr-2"></i>Time Table</a>
         <a href="#" class="block hover:text-yellow-300"><i class="fa fa-bullhorn mr-2"></i>Notices</a>
         <a href="#" class="block hover:text-red-400 mt-4"><i class="fa fa-sign-out-alt mr-2"></i>Logout</a>
@@ -49,10 +49,10 @@
           <p class="text-gray-600 text-sm">Father Name:  <%= student1.fatherName %><br>
           Mother Name: <%= student1.motherName %></p>
         </div>
-        <div class="bg-white p-5 rounded-lg shadow">
+        <!-- <div class="bg-white p-5 rounded-lg shadow">
           <h2 class="font-semibold mb-2">Overall Attendance</h2>
           <p class="text-2xl font-bold text-green-600">90.2%</p>
-        </div>
+        </div> -->
         <div class="bg-white p-5 rounded-lg shadow">
           <h2 class="font-semibold mb-2">Upcoming Events</h2>
           <ul class="text-sm text-gray-600 space-y-1">
@@ -64,7 +64,7 @@
       </div>
 
       <!-- Attendance Summary -->
-      <div class="bg-white p-5 rounded-lg shadow mb-6">
+      <!-- <div class="bg-white p-5 rounded-lg shadow mb-6">
         <h2 class="font-semibold mb-4">Attendance Summary</h2>
         <div class="grid md:grid-cols-4 gap-4">
           <div class="bg-gray-50 p-3 rounded text-center">
@@ -84,7 +84,7 @@
             <p class="text-green-600 font-semibold">95%</p>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <!-- Timetable -->
       <div class="bg-white p-5 rounded-lg shadow mb-6">

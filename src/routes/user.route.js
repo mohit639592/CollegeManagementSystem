@@ -83,7 +83,7 @@ router.post("/login", async (req, res) => {
 
     // 6️⃣ Fetch subjects and render home page
     const subjects = await Subject.find({ class: student.classNo });
-    return res.render("home", { user, student1:student, subjects });
+    return res.render("home", {email, user, student1:student, subjects });
 
   } catch (err) {
     console.error(err);
@@ -199,7 +199,20 @@ router.post("/head/add-student",async(req,res)=>{
   });
   
   
+  router.get("/profile", async (req, res) => {
+    try {
+      const email = req.query.email;
+      const student = await studentModel.findOne({ email });
   
+      if (!student) return res.send("Student not found");
+  
+      res.render("studentProfile", { student });
+    } catch (err) {
+      console.error(err);
+      res.send("Error loading profile");
+    }
+  });
+    
 
 
 
