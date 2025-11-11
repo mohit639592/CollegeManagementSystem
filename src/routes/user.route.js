@@ -202,16 +202,18 @@ router.post("/head/add-student",async(req,res)=>{
   router.get("/profile", async (req, res) => {
     try {
       const email = req.query.email;
+      if (!email) return res.status(400).send("Email missing in query");
+  
       const student = await studentModel.findOne({ email });
+      if (!student) return res.status(404).send("Student not found");
   
-      if (!student) return res.send("Student not found");
-  
-      res.render("studentProfile", { student });
+      res.render("studentprofile", { student });
     } catch (err) {
-      console.error(err);
-      res.send("Error loading profile");
+      console.error("Profile error:", err);
+      res.status(500).send("Error loading profile");
     }
   });
+  
     
 
 
