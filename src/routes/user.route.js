@@ -2,6 +2,7 @@ const express = require("express")
 const usermodel = require("../models/user.model")
 const router = express.Router();
 const path = require("path");
+const timetable = require("../models/time-table")
 // const { route } = require("../app");
 const studentModel = require("../models/student.model");
 const teacherModel = require("../models/teacher.model")
@@ -41,6 +42,8 @@ router.post("/signup", async (req, res) => {
 router.get("/login",(req,res)=>{
     res.render("login",{title:"login hai"})
 })
+
+
 
 
 router.post("/login", async (req, res) => {
@@ -83,7 +86,8 @@ router.post("/login", async (req, res) => {
 
     // 6️⃣ Fetch subjects and render home page
     const subjects = await Subject.find({ class: student.classNo });
-    return res.render("home", {email, user, student1:student, subjects });
+    const Timetable = await timetable.find({classNo:student.classNo});
+    return res.render("home", {email, user, student1:student, subjects,Timetable });
 
   } catch (err) {
     console.error(err);
@@ -284,8 +288,24 @@ router.post("/head/add-student",async(req,res)=>{
     res.send("STUDENT ADDED SUCCESSFULLY")
   })
 
+  router.get("/add-timetable", (req,res)=>{
+    res.render("head-/add-timetable");
+  });
 
 
+  router.post("/add-timetable", async (req, res) => {
+    try {
+      const data = req.body;
+  
+      const newTimetable = new timetable(data);   // create document
+      await newTimetable.save();                  // save document
+  
+      res.status(200).json({ message: "Timetable added successfully" });
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  });
+  
 
 
   router.get("/sitemap.xml", (req, res) => {
@@ -308,9 +328,59 @@ router.post("/head/add-student",async(req,res)=>{
     }
   });
   
+
+  
     
+  router.get("/sub",async (req,res)=>{
+    const subjects = await Subject.find({ class: req.query.classNo });
+    if(!subjects) return res.status(404).send("Student Not Found");
+    res.render("sub-data",{subjects});
+  });
 
 
+
+  router.get("/student/timetable", async (req, res) => {
+    try {
+      const classNo = req.query.classNo;   // <-- using query string
+  
+      if (!classNo) {
+        return res.render("student-timetable", { classNo: "", data: [] });
+      }
+  
+      const data = await timetable.find({ classNo }).sort({
+        day: 1,
+        startTime: 1
+      });
+  
+      res.render("time-table", { classNo, data });
+  
+    } catch (err) {
+      res.status(500).send(err.message);
+    }
+  });
+  
+
+  router.get("/head/timetable", async (req, res) => {
+    try {
+      const classNo = req.query.classNo;  // optional query
+  
+      let filter = {};
+      if (classNo) filter.classNo = classNo;
+  
+      const data = await timetable.find(filter).sort({
+        classNo: 1,
+        day: 1,
+        startTime: 1
+      });
+  
+      res.render("head-/timetable", { classNo, data });
+  
+    } catch (err) {
+      res.status(500).send(err.message);
+    }
+  });
+  
+ 
 
 
 //HEAD TEACHER PART

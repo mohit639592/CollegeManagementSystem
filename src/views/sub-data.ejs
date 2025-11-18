@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Subjects</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: auto;
+            background-color: #fff;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 25px;
+        }
+
+        .subject-card {
+            background-color: #f9f9f9;
+            border-left: 5px solid #4A90E2;
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+        }
+
+        .subject-card strong {
+            color: #333;
+        }
+
+        .subject-card p {
+            margin: 5px 0;
+            color: #555;
+        }
+
+        .no-subjects {
+            text-align: center;
+            color: #e74c3c;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <h2>
+        Subjects for Class: <%= subjects && subjects.length > 0 ? subjects[0].class : "Not Found" %>
+    </h2>
+
+    <% if (!subjects || subjects.length === 0) { %>
+        <p class="no-subjects">No subjects found for this class.</p>
+    <% } else { %>
+        <% subjects.forEach(function(sub) { %>
+            <div class="subject-card">
+                <p><strong>Subject Name:</strong> <%= sub.name %></p>
+                <% if(sub.code) { %>
+                    <p><strong>Code:</strong> <%= sub.code %></p>
+                <% } %>
+                <p><strong>Teacher ID:</strong> <%= sub.teacherId %></p>
+            </div>
+        <% }); %>
+    <% } %>
+
+</div>
+
+</body>
+</html>

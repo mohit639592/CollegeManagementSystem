@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Head Timetable</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+
+<body class="bg-light">
+
+<div class="container mt-5">
+    <h3 class="mb-4">All Classes Timetable</h3>
+
+    <!-- Filter by class -->
+    <form action="/head/timetable" method="GET" class="mb-4">
+        <div class="row">
+            <div class="col-md-4">
+                <input type="text" name="classNo" class="form-control" placeholder="Filter by Class No">
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-primary">Search</button>
+            </div>
+        </div>
+    </form>
+
+    <table class="table table-bordered table-striped shadow">
+        <thead class="table-dark">
+            <tr>
+                <th>Class</th>
+                <th>Day</th>
+                <th>Subject</th>
+                <th>Teacher ID</th>
+                <th>Teacher Name</th>
+                <th>Time</th>
+                <th>Room No</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <% if (data.length === 0) { %>
+                <tr>
+                    <td colspan="7" class="text-center text-muted">No Data Available</td>
+                </tr>
+            <% } %>
+
+            <% data.forEach(row => { %>
+                <tr>
+                    <td><%= row.classNo %></td>
+                    <td><%= row.day %></td>
+                    <td><%= row.subject %></td>
+                    <td><%= row.teacherId %></td>
+                    <td><%= row.teacherName %></td>
+                    <td><%= row.startTime %> - <%= row.endTime %></td>
+                    <td><%= row.roomNo %></td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+
+</div>
+
+</body>
+</html>

@@ -16,9 +16,12 @@
       <nav class="space-y-4">
         <a href="#" class="block hover:text-yellow-300"><i class="fa fa-home mr-2"></i>Dashboard</a>
         <a href="/profile?email=<%= email %>" class="block hover:text-yellow-300"><i class="fa fa-user mr-2"></i>My Profile</a>
-        <a href="#" class="block hover:text-yellow-300"><i class="fa fa-book mr-2"></i>Subjects</a>
+        <a href="/sub?classNo=<%= student1.classNo %>" class="block hover:text-yellow-300">
+          <i class="fa fa-book mr-2"></i>Subjects
+      </a>
+      
         <!-- <a href="#" class="block hover:text-yellow-300"><i class="fa fa-clipboard-check mr-2"></i>Attendance</a> -->
-        <a href="#" class="block hover:text-yellow-300"><i class="fa fa-calendar-alt mr-2"></i>Time Table</a>
+        <a href="/student/timetable?classNo=<%= student1.classNo %>" class="block hover:text-yellow-300"><i class="fa fa-calendar-alt mr-2"></i>Time Table</a>
         <a href="#" class="block hover:text-yellow-300"><i class="fa fa-bullhorn mr-2"></i>Notices</a>
         <a href="#" class="block hover:text-red-400 mt-4"><i class="fa fa-sign-out-alt mr-2"></i>Logout</a>
       </nav>
@@ -87,54 +90,48 @@
       </div> -->
 
       <!-- Timetable -->
-      <div class="bg-white p-5 rounded-lg shadow mb-6">
-        <h2 class="font-semibold mb-4">Today’s Schedule</h2>
-        <div class="overflow-x-auto">
-          <table class="min-w-full text-sm">
-            <thead>
-              <tr class="bg-gray-200 text-left">
-                <th class="p-2">Time</th>
-                <th class="p-2">Subject</th>
-                <th class="p-2">Teacher</th>
-                <th class="p-2">Room</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="border-b">
-                <td class="p-2">08:00 - 08:45</td>
-                <td class="p-2">Mathematics</td>
-                <td class="p-2">Mr. Sharma</td>
-                <td class="p-2">201</td>
-              </tr>
-              <tr class="border-b">
-                <td class="p-2">08:50 - 09:35</td>
-                <td class="p-2">Physics</td>
-                <td class="p-2">Ms. Singh</td>
-                <td class="p-2">305</td>
-              </tr>
-              <tr class="border-b">
-                <td class="p-2">09:40 - 10:25</td>
-                <td class="p-2">Chemistry</td>
-                <td class="p-2">Dr. Rao</td>
-                <td class="p-2">212</td>
-              </tr>
-              <tr class="border-b">
-                <td class="p-2">10:40 - 11:25</td>
-                <td class="p-2">English</td>
-                <td class="p-2">Mrs. Gupta</td>
-                <td class="p-2">108</td>
-              </tr>
-              <tr>
-                <td class="p-2">11:30 - 12:15</td>
-                <td class="p-2">Computer</td>
-                <td class="p-2">Mr. Verma</td>
-                <td class="p-2">Lab-1</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <a href="#" class="text-blue-600 text-sm font-semibold mt-2 block">View Full Timetable →</a>
-      </div>
+ <!-- Timetable -->
+<div class="bg-white p-5 rounded-lg shadow mb-6">
+  <h2 class="font-semibold mb-4">Class Timetable</h2>
+
+  <% if (Timetable.length === 0) { %>
+      <p class="text-gray-500">No timetable found for your class.</p>
+  <% } else { %>
+
+  <div class="overflow-x-auto">
+    <table class="min-w-full text-sm">
+      <thead>
+        <tr class="bg-gray-200 text-left">
+          <th class="p-2">Day</th>
+          <th class="p-2">Time</th>
+          <th class="p-2">Subject</th>
+          <th class="p-2">Teacher</th>
+          <th class="p-2">Room</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% Timetable.forEach(row => { %>
+          <tr class="border-b">
+            <td class="p-2"><%= row.day %></td>
+            <td class="p-2"><%= row.startTime %> - <%= row.endTime %></td>
+            <td class="p-2"><%= row.subject %></td>
+            <td class="p-2"><%= row.teacherName %></td>
+            <td class="p-2"><%= row.roomNo %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+
+  <% } %>
+
+  <a href="/student/timetable?classNo=<%= student1.classNo %>" 
+     class="text-blue-600 text-sm font-semibold mt-2 block">
+     View Full Timetable →
+  </a>
+</div>
+
 
       <!-- Subjects & Teachers -->
       <div class="bg-white p-5 rounded-lg shadow mb-6">
