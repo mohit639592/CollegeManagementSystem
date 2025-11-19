@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Teachers</title>
+    <style>
+        table {
+            width: 95%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+        th {
+            background: #333;
+            color: white;
+        }
+        h1 {
+            text-align: center;
+        }
+        .delete-btn {
+            background: red;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            text-decoration: none;
+        }
+        .delete-btn:hover {
+            background: darkred;
+        }
+    </style>
+</head>
+<body>
+    <h1>All Teacher Details</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>ID</th>
+                <th>Class</th>
+                <th>Subject</th>
+                <th>Salary</th>
+                <th>Contact No</th>
+                <th>Address</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <% teachers.forEach(t => { %>
+                <tr>
+                    <td><%= t.name %></td>
+                    <td><%= t.email %></td>
+                    <td><%= t.id %></td>
+                    <td><%= t.class %></td>
+                    <td><%= t.subject %></td>
+                    <td><%= t.salary %></td>
+                    <td><%= t.contactNo %></td>
+                    <td><%= t.address %></td>
+
+                    <!-- DELETE BUTTON -->
+                    <td>
+                        <a 
+                          href="/head/teacher/delete/<%= t._id %>" 
+                          class="delete-btn" 
+                          onclick="return confirm('Are you sure you want to delete this teacher?')"
+                        >
+                            Delete
+                        </a>
+                    </td>
+
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</body>
+</html>

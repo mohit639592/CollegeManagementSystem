@@ -151,6 +151,21 @@ router.get("/head/add-student",(req,res)=>{
   res.render("head-/add-student")
 })
 
+router.get("/head/teacher",async (req,res)=>{
+  const allteacher = await teacherModel.find();
+  res.render("head-/findteacher",{teachers:allteacher})
+})
+
+router.get("/head/teacher/delete/:id", async (req, res) => {
+  try {
+    await teacherModel.findByIdAndDelete(req.params.id);
+    res.redirect("/head/teacher");
+  } catch (err) {
+    res.send(err);
+  }
+});
+
+
 
 
 //update std

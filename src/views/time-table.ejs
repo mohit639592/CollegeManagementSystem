@@ -12,18 +12,6 @@
 
     <h3 class="mb-4">Student Timetable</h3>
 
-    <!-- Search Form -->
-    <form action="/student/timetable" method="GET" class="mb-4">
-        <div class="row">
-            <div class="col-md-4">
-                <input type="text" name="classNo" class="form-control" placeholder="Enter Class No" required>
-            </div>
-            <div class="col-md-2">
-                <button class="btn btn-primary">Search</button>
-            </div>
-        </div>
-    </form>
-
     <% if (classNo) { %>
         <h5>Class: <%= classNo %></h5>
     <% } %>
