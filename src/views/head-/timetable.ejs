@@ -33,13 +33,14 @@
                 <th>Teacher Name</th>
                 <th>Time</th>
                 <th>Room No</th>
+                <th>Action</th>   <!-- NEW COLUMN -->
             </tr>
         </thead>
 
         <tbody>
             <% if (data.length === 0) { %>
                 <tr>
-                    <td colspan="7" class="text-center text-muted">No Data Available</td>
+                    <td colspan="8" class="text-center text-muted">No Data Available</td>
                 </tr>
             <% } %>
 
@@ -52,6 +53,14 @@
                     <td><%= row.teacherName %></td>
                     <td><%= row.startTime %> - <%= row.endTime %></td>
                     <td><%= row.roomNo %></td>
+
+                    <td>
+                        <a href="/head/timetable/delete/<%= row._id %>" 
+                           class="btn btn-danger btn-sm"
+                           onclick="return confirm('Are you sure you want to delete this entry?');">
+                            Delete
+                        </a>
+                    </td>
                 </tr>
             <% }) %>
         </tbody>

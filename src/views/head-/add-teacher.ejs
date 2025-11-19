@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Teacher Management</title>
 
-  <!-- Bootstrap CSS (CDN) -->
+  <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
   <style>
@@ -15,174 +15,110 @@
     .form-section { max-width: 900px; margin: 24px auto; }
   </style>
 </head>
+
 <body>
   <div class="container form-section">
+
+    <!-- Add Teacher Form -->
     <div class="card shadow-sm">
       <div class="card-body">
-        <h3 class="card-title mb-3">Add / Edit Teacher</h3>
-        <!-- Change action to your POST route; for edit you can use method override or separate route -->
+        <h3 class="card-title mb-3">Add Teacher</h3>
+
         <form id="teacherForm" action="/head/add-teacher" method="POST" novalidate>
+
           <div class="row g-3">
+
             <div class="col-md-6">
-              <label for="name" class="form-label required">Name</label>
-              <input type="text" class="form-control" id="name" name="name" required minlength="2" />
-              <div class="invalid-feedback">Please enter teacher's name (min 2 characters).</div>
+              <label class="form-label required">Name</label>
+              <input type="text" class="form-control" name="name" required minlength="2">
             </div>
 
             <div class="col-md-6">
-              <label for="email" class="form-label required">Email</label>
-              <input type="email" class="form-control" id="email" name="email" required />
-              <div class="invalid-feedback">Please enter a valid email address.</div>
+              <label class="form-label required">Email</label>
+              <input type="email" class="form-control" name="email" required>
             </div>
 
             <div class="col-md-6">
-              <label for="password" class="form-label required">Password</label>
-              <div class="input-group">
-                <input type="password" class="form-control" id="password" name="password" required minlength="6" />
-                <button class="btn btn-outline-secondary" type="button" id="togglePass" title="Show/Hide password">Show</button>
-                <div class="invalid-feedback">Password should be at least 6 characters.</div>
-              </div>
+              <label class="form-label required">Password</label>
+              <input type="password" class="form-control" name="password" required minlength="6">
             </div>
 
             <div class="col-md-6">
-              <label for="id" class="form-label required">ID (unique)</label>
-              <input type="text" class="form-control" id="id" name="id" required />
-              <div class="invalid-feedback">Enter a unique teacher ID.</div>
+              <label class="form-label required">ID (unique)</label>
+              <input type="text" class="form-control" name="id" required>
             </div>
 
             <div class="col-md-6">
-              <label for="class" class="form-label required">Class</label>
-              <input type="text" class="form-control" id="class" name="class" required />
-              <div class="invalid-feedback">Enter the class (e.g., "10A" or "CS-1").</div>
+              <label class="form-label required">Class</label>
+              <input type="text" class="form-control" name="class" required>
             </div>
 
             <div class="col-md-6">
-              <label for="salary" class="form-label required">Salary</label>
-              <input type="text" class="form-control" id="salary" name="salary" required pattern="^[0-9]+(\.[0-9]{1,2})?$" />
-              <div class="invalid-feedback">Enter a valid salary (numbers only).</div>
+              <label class="form-label required">Salary</label>
+              <input type="text" class="form-control" name="salary" required>
             </div>
 
             <div class="col-md-6">
-              <label for="contactNo" class="form-label required">Contact No.</label>
-              <input type="tel" class="form-control" id="contactNo" name="contactNo" required pattern="^[0-9]{7,15}$" />
-              <div class="invalid-feedback">Enter a valid contact number (7–15 digits).</div>
+              <label class="form-label required">Contact No.</label>
+              <input type="tel" class="form-control" name="contactNo" required>
             </div>
 
             <div class="col-md-6">
-              <label for="subject" class="form-label required">Subject</label>
-              <input type="subject" class="form-control" id="subject" name="subject" required />
-              <div class="invalid-feedback">Please enter a valid Subject.</div>
+              <label class="form-label required">Subject</label>
+              <input type="text" class="form-control" name="subject" required>
             </div>
 
             <div class="col-12">
-              <label for="address" class="form-label required">Address</label>
-              <textarea class="form-control" id="address" name="address" rows="2" required></textarea>
-              <div class="invalid-feedback">Address is required.</div>
+              <label class="form-label required">Address</label>
+              <textarea class="form-control" name="address" rows="2" required></textarea>
             </div>
-
 
             <div class="col-12 d-flex gap-2">
               <button type="submit" class="btn btn-primary">Save Teacher</button>
               <button type="reset" class="btn btn-outline-secondary">Reset</button>
             </div>
+
           </div>
+
         </form>
       </div>
     </div>
 
-    <!-- Example listing table (replace with server-rendered rows using EJS) -->
+    <!-- Teachers List -->
     <div class="card shadow-sm mt-4">
       <div class="card-body">
         <h5 class="mb-3">Teachers List</h5>
+
         <div class="table-responsive">
           <table class="table table-hover align-middle">
             <thead class="table-light">
               <tr>
                 <th>Name</th>
                 <th>Email</th>
-                <th>ID</th>
-                <th>Class</th>
-                <th>Salary</th>
-                <th>Contact</th>
-                <th>Address</th>
-                <th>subject</th>
-                <th>Actions</th>
+                <th>Subject</th>
               </tr>
             </thead>
-            <tbody id="teachersTbody">
-              <!-- Example static row (replace with EJS loop) -->
+
+            <tbody>
               <% teachers.forEach(teacher => { %>
                 <tr>
                   <td><%= teacher.name %></td>
                   <td><%= teacher.email %></td>
                   <td><%= teacher.subject %></td>
-                  <td><%= teacher.classNo %></td>
-                  <td>
-                    <a href="/teachers/edit/<%= teacher._id %>" class="btn btn-sm btn-warning">Edit</a>
-                    <a href="/teachers/delete/<%= teacher._id %>" class="btn btn-sm btn-danger">Delete</a>
-                  </td>
                 </tr>
-                <% }) %>
+              <% }) %>
             </tbody>
+
           </table>
         </div>
+
       </div>
     </div>
 
   </div>
 
-  <!-- Bootstrap JS & dependencies -->
+  <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-  <script>
-    // Toggle password visibility
-    const toggleBtn = document.getElementById('togglePass');
-    const passwordInput = document.getElementById('password');
-    toggleBtn.addEventListener('click', () => {
-      if (passwordInput.type === 'password') {
-        passwordInput.type = 'text';
-        toggleBtn.textContent = 'Hide';
-      } else {
-        passwordInput.type = 'password';
-        toggleBtn.textContent = 'Show';
-      }
-    });
-
-    // Bootstrap form validation
-    (function () {
-      'use strict';
-      const form = document.getElementById('teacherForm');
-      form.addEventListener('submit', function (event) {
-        if (!form.checkValidity()) {
-          event.preventDefault();
-          event.stopPropagation();
-        }
-        form.classList.add('was-validated');
-      }, false);
-    })();
-
-    // Example: populate table with sample data (for frontend demo only)
-    // Remove this when rendering server-side (EJS) rows.
-    
-    const tbody = document.getElementById('teachersTbody');
-    sampleTeachers.forEach(t => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>${t.name}</td>
-        <td>${t.email}</td>
-        <td>${t.id}</td>
-        <td>${t.class}</td>
-        <td>${t.salary}</td>
-        <td>${t.contactNo}</td>
-        <td>${t.address}</td>
-        <td>${t.subject}</td>
-        <td>
-          <a href="/teachers/edit/${t.id}" class="btn btn-sm btn-outline-primary">Edit</a>
-          <button class="btn btn-sm btn-outline-danger" onclick="alert('Delete ${t.id} (hook to server)')">Delete</button>
-        </td>
-      `;
-      tbody.appendChild(tr);
-    });
-  </script>
 </body>
 </html>

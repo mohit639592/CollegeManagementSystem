@@ -134,19 +134,17 @@
 
       <!-- Subjects & Teachers -->
       <div class="bg-white p-5 rounded-lg shadow mb-6">
-        <h2 class="text-xl font-semibold mb-4 text-gray-800">Subjects & Teachers</h2>
+        <h2 class="text-xl font-semibold mb-4 text-gray-800">Subjects</h2>
     
         <!-- Table Header -->
         <div class="grid grid-cols-2 gap-4 font-semibold text-gray-700 border-b pb-2 mb-2">
             <div>Subject</div>
-            <div>Teacher</div>
         </div>
     
         <!-- Table Rows -->
         <% subjects.forEach(subject => { %>
             <div class="grid grid-cols-2 gap-4 border-b py-2 text-gray-800">
                 <div><%= subject.name %></div>
-                <div><%= subject.teacherName %></div>
             </div>
         <% }) %>
     </div>

@@ -395,6 +395,15 @@ router.post("/head/add-student",async(req,res)=>{
     }
   });
   
+  router.get("/head/timetable/delete/:id", async (req, res) => {
+    try {
+      await timetable.findByIdAndDelete(req.params.id);
+      res.redirect("/head/timetable");
+    } catch (err) {
+      res.status(500).send(err.message);
+    }
+  });
+  
  
 
 
@@ -435,6 +444,13 @@ router.post("/head/add-teacher",async (req,res)=>{
   await newTeacher.save();
   res.redirect("/head/add-teacher");
 })
+
+router.get("/teacher/profile",async (req,res)=>{
+  const teacher = await teacherModel.findOne({email:req.query.email});
+  if(!teacher) return res.status(404).send("Teacher Not Found");
+  res.render("teacherprofile",{teacher});
+});
+
 // router.get("/home",(req,res)=>{
 //     res.render("home",{user: req.user})
 
